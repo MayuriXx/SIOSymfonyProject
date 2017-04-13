@@ -1,0 +1,3 @@
+lpsio_plateforme_homepage:
+    path:     /
+    defaults: { _controller: LPSIOPlateformeBundle:Default:index }
