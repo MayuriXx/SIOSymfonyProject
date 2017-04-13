@@ -1,3 +1,11 @@
 lpsio_plateforme_homepage:
     path:     /
     defaults: { _controller: LPSIOPlateformeBundle:Default:index }
+
+lpsio_plateforme_contact:
+    path:    /contact
+    defaults: {_controller: LPSIOPlateformeBundle:Default:contact }
+
+lpsio_plateforme_about:
+    path:    /a-propos
+    defaults: {_controller: LPSIOPlateformeBundle:Default:about }
