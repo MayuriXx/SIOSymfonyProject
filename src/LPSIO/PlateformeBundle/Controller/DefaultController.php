@@ -20,4 +20,9 @@ class DefaultController extends Controller
     {
         return $this->render('LPSIOPlateformeBundle:Default:contact.html.twig');
     }
+
+    public function inscriptionAction()
+    {
+        return $this->render('LPSIOPlateformeBundle:Default:inscription.html.twig');
+    }
 }

@@ -4,7 +4,14 @@
 {% block title %}{{ parent() }} - A propos{% endblock %}
 
 {% block navbar %}
-
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+            <li class="active"><a href="{{ path('lpsio_plateforme_about') }}">A propos</a></li>
+            <li><a href="{{ path('lpsio_plateforme_inscription') }}">S'inscrire</a></li>
+            <li><a href="{{ path('lpsio_plateforme_contact') }}">Nous contacter</a></li>
+        </ul>
+    </div>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -12,5 +19,5 @@
 {% endblock %}
 
 {% block mainbody %}
-    A-propos
+    <h1>A propos</h1>
 {% endblock %}

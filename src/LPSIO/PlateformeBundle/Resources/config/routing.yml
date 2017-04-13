@@ -9,3 +9,7 @@ lpsio_plateforme_contact:
 lpsio_plateforme_about:
     path:    /a-propos
     defaults: {_controller: LPSIOPlateformeBundle:Default:about }
+
+lpsio_plateforme_inscription:
+    path:    /inscription
+    defaults: {_controller:LPSIOPlateformeBundle:Default:inscription }
