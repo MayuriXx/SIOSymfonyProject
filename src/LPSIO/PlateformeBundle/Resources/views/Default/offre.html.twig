@@ -19,10 +19,17 @@
     <ol class="breadcrumb">
         <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
         <li><a href="{{ path('lpsio_plateforme_offres') }}">Offres</a></li>
-        <li class="active">Offre {{ offre }}</li>
+        <li class="active">Offre {{ offre.titre }}</li>
     </ol>
 {% endblock %}
 
 {% block mainbody %}
-    <h1>Offre : {{ offre }}</h1>
+    <h1>Offre : {{ offre.id }}</h1>
+    <h2>Description</h2>
+    <p>{{ offre.description }}</p>
+    <h3>Informations</h3>
+    <p>Date de début : {{ offre.dateDebut|date("m/d/y") }}</p>
+    <p>Date de fin : {{ offre.dateFin|date("m/d/y") }}</p>
+    <p>Durée : {{ offre.duree }} jours</p>
+    <p>Date de création : {{ offre.dateCreation|date("m/d/y") }}</p>
 {% endblock %}
