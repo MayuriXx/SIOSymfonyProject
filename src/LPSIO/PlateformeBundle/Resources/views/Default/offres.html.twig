@@ -33,7 +33,6 @@
                         <div class="caption">
                             <h3>{{ offre.titre }}</h3>
                             <p>{{ offre.description }}</p>
-                            <p>Durée (en jour) {{ offre.duree }} - Salaire : {{ offre.salaire }}</p>
                             <p>Date de début de contrat :  {{ offre.dateDebut|date("m/d/y") }}</p>
                             <p>Date de création : {{ offre.dateCreation|date("m/d/y") }}</p>
                             <p><a href="{{ path('lpsio_plateforme_offre', {'idOffre' : offre.id }) }}" class="btn btn-primary" role="button">Voir l'offre</a></p>
