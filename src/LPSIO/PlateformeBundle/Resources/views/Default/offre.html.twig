@@ -1,7 +1,7 @@
 {# src/LPSIO/PlateformeBundle/Ressources/views/base.html.twig #}
 {% extends "LPSIOPlateformeBundle::base.html.twig" %}
 
-{% block title %}{{ parent() }} - A propos{% endblock %}
+{% block title %}{{ parent() }} - {{ offre.titre }}{% endblock %}
 
 {% block navbar %}
     <div id="navbar" class="navbar-collapse collapse">
@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block mainbody %}
-    <h1>Offre : {{ offre.id }}</h1>
+    <h1>{{ offre.titre }} - {{ offre.id }}</h1>
     <h2>Description</h2>
     <p>{{ offre.description }}</p>
     <h3>Informations</h3>
