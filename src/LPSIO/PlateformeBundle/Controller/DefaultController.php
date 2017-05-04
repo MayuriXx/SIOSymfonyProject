@@ -16,7 +16,16 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:index.html.twig');
+        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+        $offres = $repositoryOffre->findBy(
+            array(),
+            array('dateCreation' => 'DESC'),
+            3,
+            0
+        );
+
+        return $this->render('LPSIOPlateformeBundle:Default:index.html.twig', array('offres' => $offres));
     }
 
     public function aboutAction()
@@ -42,7 +51,12 @@ class DefaultController extends Controller
     {
         $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
-        $offres = $repositoryOffre->findAll();
+        $offres = $repositoryOffre->findBy(
+            array(),
+            array('dateCreation' => 'DESC'),
+            null,
+            null
+        );
 
         return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
     }
