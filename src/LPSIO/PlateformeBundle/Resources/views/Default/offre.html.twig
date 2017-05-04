@@ -28,6 +28,22 @@
     <h2>Description</h2>
     <p>{{ offre.description }}</p>
     <h3>Informations</h3>
+    <p>
+        Type de contrat :
+        {# 1 : Contrat d'apprentissage #}
+        {# 2 : Contrat de professionnalisation #}
+        {# 3 : Stage #}
+        {# Autre : inconnu #}
+        {% if offre.type == "1" %}
+            Contrat d'apprentissage
+        {% elseif offre.type == "2" %}
+            Contrat de professionnalisation
+        {% elseif offre.type == "3" %}
+            Stage
+        {% else %}
+            Inconnu
+        {% endif %}
+    </p>
     <p>Date de début : {{ offre.dateDebut|date("m/d/y") }}</p>
     <p>Date de fin : {{ offre.dateFin|date("m/d/y") }}</p>
     <p>Durée : {{ offre.duree }} jours</p>
