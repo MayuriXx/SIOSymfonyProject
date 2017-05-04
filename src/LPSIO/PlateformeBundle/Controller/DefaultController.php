@@ -23,6 +23,11 @@ class DefaultController extends Controller
         return $this->render('LPSIOPlateformeBundle:Default:about.html.twig');
     }
 
+    public function offreAction($idOffre)
+    {
+        return $this->render('LPSIOPlateformeBundle:Default:offre.html.twig', array('offre' => $idOffre));
+    }
+
     public function contactAction()
     {
         $contact = new Contact();
