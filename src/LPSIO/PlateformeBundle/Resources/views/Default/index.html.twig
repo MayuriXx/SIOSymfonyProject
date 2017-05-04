@@ -23,7 +23,7 @@
 
 {% block mainbody %}
     <h1>Bienvenue</h1>
-    <div class="jumbotron">
+    <div style="background-image: url('{{ asset("bundles/lpsioplateforme/images/home.jpeg") }}')" class="jumbotron img-home">
         <h1>Bienvenue sur le site de la LPSIO !</h1>
         <p>Retrouvez l'ensemble de nos offres de stages et d'apprentissages.</p>
         <p><a class="btn btn-primary btn-lg" href="{{ path('lpsio_plateforme_about') }}" role="button">Plus d'informations</a></p>
