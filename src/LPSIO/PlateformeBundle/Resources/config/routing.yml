@@ -15,7 +15,7 @@ lpsio_plateforme_inscription:
     defaults: {_controller:LPSIOPlateformeBundle:Default:inscription }
 
 lpsio_plateforme_offre:
-    path:    /offres/{idOffre}
+    path:    /offre/{idOffre}
     defaults: {_controller:LPSIOPlateformeBundle:Default:offre }
     requirements:
         idoffre: \d+
