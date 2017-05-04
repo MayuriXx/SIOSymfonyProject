@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 
@@ -25,12 +26,25 @@ class DefaultController extends Controller
 
     public function offreAction($idOffre)
     {
-        return $this->render('LPSIOPlateformeBundle:Default:offre.html.twig', array('offre' => $idOffre));
+        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+        $offre = $repositoryOffre->find($idOffre);
+
+        if(!$offre)
+        {
+            throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+        }
+
+        return $this->render('LPSIOPlateformeBundle:Default:offre.html.twig', array('offre' => $offre));
     }
 
     public function offresAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig');
+        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+        $offres = $repositoryOffre->findAll();
+
+        return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
     }
 
     public function contactAction()
