@@ -5,6 +5,7 @@ namespace LPSIO\PlateformeBundle\Controller;
 use LPSIO\PlateformeBundle\Entity\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -72,6 +73,7 @@ class DefaultController extends Controller
             ->add('prenom', TextType::class, array('label' => 'Prénom'))
             ->add('courriel', EmailType::class, array('label' => 'Courriel'))
             ->add('message', TextareaType::class, array('label' => 'Message'))
+            ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
             ->add('save', SubmitType::class, array('label' => 'Envoyer'));
 
         $form = $formBuilder->getForm();
