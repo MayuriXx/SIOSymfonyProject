@@ -23,3 +23,7 @@ lpsio_plateforme_offre:
 lpsio_plateforme_offres:
     path:    /offres
     defaults: {_controller:LPSIOPlateformeBundle:Default:offres }
+
+lpsio_plateforme_mes_informations:
+    path:    /espace-membre/mes-informations
+    defaults: {_controller:LPSIOPlateformeBundle:Default:informations }
