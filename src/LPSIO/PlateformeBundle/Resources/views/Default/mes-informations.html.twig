@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{# src/LPSIO/PlateformeBundle/Ressources/views/base.html.twig #}
+{% extends "LPSIOPlateformeBundle::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Mes informations{% endblock %}
+
+{% block navbar %}
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+            <li><a href="{{ path('lpsio_plateforme_offres') }}">Offres</a></li>
+            <li><a href="{{ path('lpsio_plateforme_about') }}">A propos</a></li>
+            <li><a href="{{ path('lpsio_plateforme_inscription') }}">S'inscrire</a></li>
+            <li><a href="{{ path('lpsio_plateforme_contact') }}">Nous contacter</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Espace membre<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="active"><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
+                    <li><a href="#">Mes alertes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+        <li class="active">Mes informations</li>
+    </ol>
+{% endblock %}
+
+{% block mainbody %}
+    <h1>Mes informations</h1>
+{% endblock %}
