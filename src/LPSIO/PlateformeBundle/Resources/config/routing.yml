@@ -27,3 +27,7 @@ lpsio_plateforme_offres:
 lpsio_plateforme_mes_informations:
     path:    /espace-membre/mes-informations
     defaults: {_controller:LPSIOPlateformeBundle:Default:informations }
+
+lpsio_plateforme_mes_alertes:
+    path:    /espace-membre/mes-alertes
+    defaults: {_controller:LPSIOPlateformeBundle:Default:alertes }

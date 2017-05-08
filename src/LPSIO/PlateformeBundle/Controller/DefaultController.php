@@ -39,6 +39,11 @@ class DefaultController extends Controller
         return $this->render('LPSIOPlateformeBundle:Default:about.html.twig');
     }
 
+    public function alertesAction()
+    {
+        return $this->render('LPSIOPlateformeBundle:Default:alertes.html.twig');
+    }
+
     public function offreAction($idOffre)
     {
         $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
