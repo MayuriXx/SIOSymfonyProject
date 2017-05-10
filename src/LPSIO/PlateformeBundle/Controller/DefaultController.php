@@ -3,8 +3,11 @@
 namespace LPSIO\PlateformeBundle\Controller;
 
 use LPSIO\PlateformeBundle\Entity\Contact;
+use LPSIO\PlateformeBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -93,6 +96,24 @@ class DefaultController extends Controller
 
     public function inscriptionAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:inscription.html.twig');
+        $utilisateur = new Utilisateur();
+
+        $builder = $this->createFormBuilder($utilisateur)
+            ->add('nom', TextType::class, array('label' => 'Nom'))
+            ->add('prenom', TextType::class, array('label' => 'Prénom'))
+            ->add('adresse', TextType::class, array('label' => 'Adresse'))
+            ->add('ville', TextType::class, array('label' => 'Ville'))
+            ->add('pays', TextType::class, array('label' => 'Pays'))
+            ->add('courriel', EmailType::class, array('label' => 'Courriel'))
+            ->add('motDePasse', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options' => array('label' => 'Mot de passe'),
+                'second_options' => array('label' => 'Répétez le mot de passe')))
+            ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
+            ->add('save', SubmitType::class, array('label' => 'Valider'));
+
+        $form = $builder->getForm();
+
+        return $this->render('LPSIOPlateformeBundle:Default:inscription.html.twig', array('form' => $form->createView()));
     }
 }
