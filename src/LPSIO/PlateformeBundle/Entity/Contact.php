@@ -49,6 +49,12 @@ class Contact
      */
     private $message;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateContact", type="datetime")
+     */
+    private $dateContact;
 
     /**
      * Get id
@@ -155,5 +161,28 @@ class Contact
     {
         return $this->message;
     }
-}
 
+    /**
+     * Set dateContact
+     *
+     * @param \DateTime $dateContact
+     *
+     * @return Contact
+     */
+    public function setDateContact($dateContact)
+    {
+        $this->dateContact = $dateContact;
+
+        return $this;
+    }
+
+    /**
+     * Get dateContact
+     *
+     * @return \DateTime
+     */
+    public function getDateContact()
+    {
+        return $this->dateContact;
+    }
+}
