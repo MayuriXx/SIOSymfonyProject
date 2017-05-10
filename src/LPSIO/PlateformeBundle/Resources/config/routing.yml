@@ -35,3 +35,7 @@ lpsio_plateforme_mes_alertes:
 lpsio_plateforme_login:
     path:    /espace-membre/login
     defaults: {_controller:LPSIOPlateformeBundle:Default:login }
+
+lpsio_plateforme_administration_modifier_offre:
+    path:    /administration/modifier-offre/{idOffre}
+    defaults: {_controller:LPSIOPlateformeBundle:Default:modifierOffre }

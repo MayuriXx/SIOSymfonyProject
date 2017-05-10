@@ -122,4 +122,18 @@ class DefaultController extends Controller
 
         return $this->render('LPSIOPlateformeBundle:Default:inscription.html.twig', array('form' => $form->createView()));
     }
+
+    public function modifierOffreAction($idOffre)
+    {
+        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+        $offre = $repositoryOffre->find($idOffre);
+
+        if(!$offre)
+        {
+            throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+        }
+
+        return $this->render('LPSIOPlateformeBundle:Administration:modifier-offre.html.twig', array('offre' => $offre));
+    }
 }
