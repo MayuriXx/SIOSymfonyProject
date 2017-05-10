@@ -66,7 +66,7 @@ class Utilisateur
     /**
      * @var string
      *
-     * @ORM\Column(name="mdp", type="string", length=255, nullable=false)
+     * @ORM\Column(name="motDePasse", type="string", length=255, nullable=false)
      */
     private $motDePasse;
 
