@@ -80,9 +80,9 @@ class Offre
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="visible", type="boolean")
      */
-    private $status;
+    private $visible;
 
 
     /**
@@ -309,5 +309,29 @@ class Offre
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     *
+     * @return Offre
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
     }
 }

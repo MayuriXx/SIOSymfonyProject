@@ -23,7 +23,7 @@ class LoadOffreData implements FixtureInterface
             $offre->setDateCreation(new \DateTime('2017-1-1'));
             $offre->setDateDebut(new \DateTime('2017-5-1'));
             $offre->setDateFin(new \DateTime('2018-5-1'));
-            $offre->setStatus(1);
+            $offre->setVisible(true);
 
             $manager->persist($offre);
         }
