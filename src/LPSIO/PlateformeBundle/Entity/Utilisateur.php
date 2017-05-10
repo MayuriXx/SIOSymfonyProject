@@ -70,6 +70,13 @@ class Utilisateur
      */
     private $motDePasse;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateInscription", type="datetime")
+     */
+    private $dateInscription;
+
 
     /**
      * Get id
@@ -247,5 +254,29 @@ class Utilisateur
     public function getMotDePasse()
     {
         return $this->motDePasse;
+    }
+
+    /**
+     * Set dateInscription
+     *
+     * @param \DateTime $dateInscription
+     *
+     * @return Utilisateur
+     */
+    public function setDateInscription($dateInscription)
+    {
+        $this->dateInscription = $dateInscription;
+
+        return $this;
+    }
+
+    /**
+     * Get dateInscription
+     *
+     * @return \DateTime
+     */
+    public function getDateInscription()
+    {
+        return $this->dateInscription;
     }
 }
