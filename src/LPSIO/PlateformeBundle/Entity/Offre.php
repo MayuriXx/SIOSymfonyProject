@@ -59,7 +59,7 @@ class Offre
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="date")
+     * @ORM\Column(name="dateCreation", type="datetime")
      */
     private $dateCreation;
 
@@ -311,4 +311,3 @@ class Offre
         return $this->status;
     }
 }
-
