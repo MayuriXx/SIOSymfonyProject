@@ -1,0 +1,51 @@
+{# src/LPSIO/PlateformeBundle/Ressources/views/base.html.twig #}
+{% extends "LPSIOPlateformeBundle::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Connexion à l'espace membre{% endblock %}
+
+{% block navbar %}
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+            <li><a href="{{ path('lpsio_plateforme_offres') }}">Offres</a></li>
+            <li><a href="{{ path('lpsio_plateforme_about') }}">A propos</a></li>
+            <li><a href="{{ path('lpsio_plateforme_inscription') }}">S'inscrire</a></li>
+            <li><a href="{{ path('lpsio_plateforme_contact') }}">Nous contacter</a></li>
+            <li class="active"><a href="{{ path('lpsio_plateforme_login') }}">Connexion</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Espace membre<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
+                    <li><a href="{{ path('lpsio_plateforme_mes_alertes') }}">Mes alertes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+        <li class="active">Connexion à l'espace membre</li>
+    </ol>
+{% endblock %}
+
+{% block mainbody %}
+    <h1>Connexion à l'espace membre</h1>
+    <form action="#" method="post">
+        <div class="form-group">
+            <label class="control-label required" for="username">Email : </label>
+            <input class="form-control" type="email" id="username" name="_username" required="required" value="" />
+        </div>
+        <div class="form-group">
+            <label class="control-label required" for="password">Mot de passe :</label>
+            <input class="form-control" type="password" id="password" name="_password" required="required"/>
+        </div>
+        <div class="form-group">
+            <input class="btn-default btn" type="submit" required="required" value="Connexion" />
+        </div>
+    </form>
+    <div class="alert alert-info" role="alert">Pas de compte ? <a href="{{ path('lpsio_plateforme_inscription') }}">Créez en un !</a></div>
+{% endblock %}

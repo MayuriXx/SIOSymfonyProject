@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 
@@ -30,6 +31,11 @@ class DefaultController extends Controller
         );
 
         return $this->render('LPSIOPlateformeBundle:Default:index.html.twig', array('offres' => $offres));
+    }
+
+    public function loginAction(Request $request)
+    {
+        return $this->render('LPSIOPlateformeBundle:Default:login.html.twig');
     }
 
     public function informationsAction()
