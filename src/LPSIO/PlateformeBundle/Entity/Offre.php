@@ -88,7 +88,7 @@ class Offre
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -160,7 +160,7 @@ class Offre
     /**
      * Get duree
      *
-     * @return int
+     * @return integer
      */
     public function getDuree()
     {
@@ -184,7 +184,7 @@ class Offre
     /**
      * Get type
      *
-     * @return int
+     * @return integer
      */
     public function getType()
     {
@@ -194,7 +194,7 @@ class Offre
     /**
      * Set salaire
      *
-     * @param string $salaire
+     * @param integer $salaire
      *
      * @return Offre
      */
@@ -208,7 +208,7 @@ class Offre
     /**
      * Get salaire
      *
-     * @return string
+     * @return integer
      */
     public function getSalaire()
     {
@@ -266,7 +266,7 @@ class Offre
     /**
      * Set dateFin
      *
-     * @param string $dateFin
+     * @param \DateTime $dateFin
      *
      * @return Offre
      */
@@ -280,35 +280,11 @@ class Offre
     /**
      * Get dateFin
      *
-     * @return string
+     * @return \DateTime
      */
     public function getDateFin()
     {
         return $this->dateFin;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return Offre
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
