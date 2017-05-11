@@ -142,7 +142,16 @@ class DefaultController extends Controller
 
     public function visualiserUtilisateursAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-utilisateurs.html.twig');
+        //récupération du repertoire de la classe utilisateur
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+
+        $utilisateurs = $repositoryUtilisateur->findBy(
+            array(),
+            array('nom' => 'ASC', 'prenom' => 'ASC'),
+            null,
+            null
+        );
+        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-utilisateurs.html.twig', array('utilisateurs' => $utilisateurs));
     }
 
     public function visualiserOffresAction()
@@ -160,7 +169,7 @@ class DefaultController extends Controller
         return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig',array('offres' => $offres));
     }
 
-    public function creerOffreAction()
+    public function creerOffreAction(Request $request)
     {
         $offre = new Offre();
 
@@ -201,7 +210,7 @@ class DefaultController extends Controller
                 $request->getSession()->getFlashBag()->add('notice', 'Offre bien enregistrée.');
 
                 // On redirige vers la page de visualisation de l'annonce nouvellement créée
-                return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+
             }
         }
     }
