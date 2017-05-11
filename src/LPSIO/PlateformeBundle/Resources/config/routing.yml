@@ -51,3 +51,9 @@ lpsio_plateforme_administration_visualiser_utilisateurs:
 lpsio_plateforme_administration_visualiser_offres:
     path:    /administration/visualiser-offres
     defaults: {_controller:LPSIOPlateformeBundle:Default:visualiserOffres }
+
+lpsio_plateforme_administration_supprimer_offre:
+    path:    /administration/supprimer-offre/{idOffre}
+    defaults: {_controller:LPSIOPlateformeBundle:Default:supprimerOffre }
+    requirements:
+        idoffre: \d+

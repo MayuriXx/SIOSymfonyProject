@@ -215,4 +215,25 @@ class DefaultController extends Controller
 
         return $this->render('LPSIOPlateformeBundle:Administration:creer-offre.html.twig', array('form' => $form->createView()));
     }
+
+    public function supprimerOffreAction($idOffre)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+        $offre = $repositoryOffre->find($idOffre);
+
+        if(!$offre)
+        {
+            throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+        }
+        else
+        {
+            $em->remove($offre);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_offres');
+
+    }
 }

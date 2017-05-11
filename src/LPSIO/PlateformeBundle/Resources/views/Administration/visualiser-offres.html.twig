@@ -99,7 +99,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="@" title="Supprimer cette offre">
+                            <a href="{{ path('lpsio_plateforme_administration_supprimer_offre', {'idOffre':i.id}) }}" title="Supprimer cette offre">
                                 <button type="button" class="btn btn-danger btn-sm">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
@@ -109,4 +109,5 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
 {% endblock %}
