@@ -209,9 +209,10 @@ class DefaultController extends Controller
 
                 $request->getSession()->getFlashBag()->add('notice', 'Offre bien enregistrée.');
 
-                // On redirige vers la page de visualisation de l'annonce nouvellement créée
-
+                // On redirige vers la page de visualisation de l'annonce nouvellement créé
             }
         }
+
+        return $this->render('LPSIOPlateformeBundle:Administration:creer-offre.html.twig', array('form' => $form->createView()));
     }
 }
