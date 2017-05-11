@@ -140,7 +140,7 @@ class DefaultController extends Controller
         {
             throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
         }
-        
+
         $builder = $this->createFormBuilder($offre)
             ->add('titre', TextType::class, array('label' => 'Titre'))
             ->add('description', TextareaType::class, array('label' => 'Description'))
