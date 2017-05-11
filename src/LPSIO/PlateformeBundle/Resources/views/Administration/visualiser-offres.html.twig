@@ -39,6 +39,14 @@
 {% endblock %}
 
 {% block mainbody %}
+    {% if app.session.flashBag('notice') %}
+        {% for msg in app.session.flashBag.get('notice') %}
+            <div class="alert alert-success alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>{{ msg }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
     <h1>Visualiser les offres</h1>
     <div class="panel panel-primary">
         <table class="table">

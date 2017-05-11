@@ -229,6 +229,8 @@ class DefaultController extends Controller
         }
         else
         {
+            $this->addFlash('notice','Suppression de l\'offre  réussie.');
+
             $em->remove($offre);
             $em->flush();
         }
