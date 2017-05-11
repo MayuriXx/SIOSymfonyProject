@@ -78,7 +78,7 @@ class DefaultController extends Controller
             null
         );
 
-        return $this->render('LPSIOPlateformeBundle:Default:visualiser-utilisateurs.html.twig', array('offres' => $offres));
+        return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
     }
 
     public function contactAction()
@@ -139,11 +139,11 @@ class DefaultController extends Controller
 
     public function visualiserUtilisateursAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:visualiser-utilisateurs.html.twig');
+        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-utilisateurs.html.twig');
     }
 
     public function visualiserOffresAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:about.html.twig');
+        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig');
     }
 }
