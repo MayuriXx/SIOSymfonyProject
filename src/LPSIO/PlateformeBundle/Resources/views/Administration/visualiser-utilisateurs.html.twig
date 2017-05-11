@@ -1,0 +1,106 @@
+{# src/LPSIO/PlateformeBundle/Ressources/views/base.html.twig #}
+{% extends "LPSIOPlateformeBundle::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Visualiser utilisateurs {% endblock %}
+
+{% block navbar %}
+    <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+            <li class="active"><a href="{{ path('lpsio_plateforme_offres') }}">Offres</a></li>
+            <li><a href="{{ path('lpsio_plateforme_about') }}">A propos</a></li>
+            <li><a href="{{ path('lpsio_plateforme_inscription') }}">S'inscrire</a></li>
+            <li><a href="{{ path('lpsio_plateforme_contact') }}">Nous contacter</a></li>
+            <li><a href="{{ path('lpsio_plateforme_login') }}">Connexion</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Espace membre<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
+                    <li><a href="{{ path('lpsio_plateforme_mes_alertes') }}">Mes alertes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
+        <li class="active">Visualiser utilisateurs</li>
+    </ol>
+{% endblock %}
+
+{% block mainbody %}
+    <h1>Visualiser utilisateurs</h1>
+ {#   {{ dump(utilisateurs) }} #}
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Liste des utilisateurs existants dans la base de données</div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Prenom
+                </th>
+                <th>
+                    Adresse
+                </th>
+                <th>
+                    Courriel
+                </th>
+                <th>
+                    Date inscription
+                </th>
+                <th>
+                    Gérer
+                </th><th>
+                    Supprimer
+                </th>
+            <tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>
+                        {{ utilisateur.nom }}
+                    </td>
+                    <td>
+                        {{ utilisateur.prenom }}
+                    </td>
+                    <td>
+                        {{ utilisateur.adresse }} <br>
+                        {{ utilisateur.ville }} , {{ utilisateur.pays }}
+                    </td>
+                    <td>
+                        {{ utilisateur.courriel }}
+                    </td>
+                    <td>
+                        {{ utilisateur.dateInscription|date('d-m-Y') }}
+                    </td>
+                    <td>
+                        <a href="#" title="Gérer cet utilisateur">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" title="Supprimer cet utilisateur">
+                             <button type="button" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-trash"></span>
+                             </button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
