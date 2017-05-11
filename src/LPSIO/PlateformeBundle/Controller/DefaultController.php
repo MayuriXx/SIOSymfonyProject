@@ -2,6 +2,7 @@
 
 namespace LPSIO\PlateformeBundle\Controller;
 
+
 use LPSIO\PlateformeBundle\Entity\Contact;
 use LPSIO\PlateformeBundle\Entity\Offre;
 use LPSIO\PlateformeBundle\Entity\Utilisateur;
@@ -16,6 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -136,13 +140,26 @@ class DefaultController extends Controller
         {
             throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
         }
+        
+        $builder = $this->createFormBuilder($offre)
+            ->add('titre', TextType::class, array('label' => 'Titre'))
+            ->add('description', TextareaType::class, array('label' => 'Description'))
+            ->add('duree', IntegerType::class, array('label' => 'Durée'))
+            ->add('type', IntegerType::class, array('label' => 'Type'))
+            ->add('salaire', IntegerType::class, array('label' => 'Salaire (€)'))
+            ->add('dateCreation', DateType::class, array('label' => 'Date de création'))
+            ->add('dateDebut', DateType::class, array('label' => 'Date de début'))
+            ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
+            ->add('visible', CheckboxType::class, array('label' => 'Visible'))
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'));
 
-        return $this->render('LPSIOPlateformeBundle:Administration:modifier-offre.html.twig', array('offre' => $offre));
+        $form = $builder->getForm();
+
+        return $this->render('LPSIOPlateformeBundle:Administration:modifier-offre.html.twig', array('form' => $form->createView(),'offre'=> $offre));
     }
 
     public function visualiserUtilisateursAction()
     {
-        //récupération du repertoire de la classe utilisateur
         $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
         $utilisateurs = $repositoryUtilisateur->findBy(
