@@ -3,6 +3,7 @@
 namespace LPSIO\PlateformeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Utilisateur
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="utilisateur")
  * @ORM\Entity
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @var int
@@ -77,6 +78,22 @@ class Utilisateur
      */
     private $dateInscription;
 
+    /**
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
+    public function eraseCredentials(){ }
 
     /**
      * Get id
@@ -278,5 +295,77 @@ class Utilisateur
     public function getDateInscription()
     {
         return $this->dateInscription;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return Utilisateur
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return Utilisateur
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return Utilisateur
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 }
