@@ -1,7 +1,7 @@
 {# src/LPSIO/PlateformeBundle/Ressources/views/base.html.twig #}
 {% extends "LPSIOPlateformeBundle::base.html.twig" %}
 
-{% block title %}{{ parent() }} - Visualiser les offres{% endblock %}
+{% block title %}{{ parent() }} - Ajouter une offre{% endblock %}
 
 {% block navbar %}
     <div id="navbar" class="navbar-collapse collapse">
@@ -28,11 +28,11 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
-        <li class="active">Visualiser les offres </li>
+        <li class="active">Ajout d'une offre</li>
     </ol>
 {% endblock %}
 
 {% block mainbody %}
-    <h1>Visualiser les offres</h1>
+    <h1>Ajout d'une offre</h1>
     {{ form(form) }}
 {% endblock %}

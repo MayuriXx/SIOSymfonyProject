@@ -3,8 +3,11 @@
 namespace LPSIO\PlateformeBundle\Controller;
 
 use LPSIO\PlateformeBundle\Entity\Contact;
+use LPSIO\PlateformeBundle\Entity\Offre;
 use LPSIO\PlateformeBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -145,5 +148,53 @@ class DefaultController extends Controller
     public function visualiserOffresAction()
     {
         return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig');
+    }
+
+    public function creerOffreAction()
+    {
+        $offre = new Offre();
+
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $offre);
+
+        $formBuilder = $this->createFormBuilder($offre)
+            ->add('titre', TextType::class, array('label' => 'Titre'))
+            ->add('type', ChoiceType::class, array(
+                'choices'  => array(
+                    'Contrat d\'apprentissage' => 1,
+                    'Contrat de professionnalisation' => 2,
+                    'Stage' => 3,
+                    'Autre' => 4)))
+            ->add('description', TextareaType::class, array('label' => 'Description'))
+            ->add('dateDebut', DateType::class, array('widget' => 'choice','label' => 'Date de début'))
+            ->add('dateFin', DateType::class, array('widget' => 'choice','label' => 'Date de fin'))
+            //->add('duree', TextType::class, array('label' => 'Durée'))
+            ->add('salaire', TextType::class, array('label' => 'Salaire'))
+            ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
+            ->add('save', SubmitType::class, array('label' => 'Envoyer'));
+
+        $form = $formBuilder->getForm();
+
+        // Si la requête est en POST
+        if ($request->isMethod('POST')) {
+            // On fait le lien Requête <-> Formulaire
+            // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
+            $form->handleRequest($request);
+
+            // On vérifie que les valeurs entrées sont correctes
+            // (Nous verrons la validation des objets en détail dans le prochain chapitre)
+            if ($form->isValid()) {
+                // On enregistre notre objet $advert dans la base de données, par exemple
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($offre);
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add('notice', 'Offre bien enregistrée.');
+
+                // On redirige vers la page de visualisation de l'annonce nouvellement créée
+                return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+            }
+        }
+
+        return $this->render('LPSIOPlateformeBundle:Administration:creer-offre.html.twig', array('form' => $form->createView()));
     }
 }
