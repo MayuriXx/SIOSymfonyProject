@@ -150,7 +150,7 @@ class DefaultController extends Controller
         return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig');
     }
 
-    public function creerOffreAction()
+    public function creerOffreAction(Request $request)
     {
         $offre = new Offre();
 
