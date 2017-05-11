@@ -39,3 +39,11 @@ lpsio_plateforme_login:
 lpsio_plateforme_administration_modifier_offre:
     path:    /administration/modifier-offre/{idOffre}
     defaults: {_controller:LPSIOPlateformeBundle:Default:modifierOffre }
+
+lpsio_plateforme_administration_visualiser_utilisateurs:
+    path:    /administration/visualiser-utilisateurs
+    defaults: {_controller:LPSIOPlateformeBundle:Default:visualiserUtilisateurs }
+
+lpsio_plateforme_administration_visualiser_offres:
+    path:    /administration/visualiser-offres
+    defaults: {_controller:LPSIOPlateformeBundle:Default:visualiserOffres }
