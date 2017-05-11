@@ -4,6 +4,7 @@
 {% block title %}{{ parent() }} - Visualiser les offres{% endblock %}
 
 {% block navbar %}
+
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
@@ -23,6 +24,7 @@
             </li>
         </ul>
     </div>
+
 {% endblock %}
 
 {% block breadcrumb %}
@@ -34,4 +36,73 @@
 
 {% block mainbody %}
     <h1>Visualiser les offres</h1>
+    <div class="panel panel-primary">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Titre
+                </th>
+                <th>
+                    Durée
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Salaire
+                </th>
+                <th>
+                    Date de début
+                </th>
+                <th>
+                    Date de fin
+                </th>
+                <th>
+                    Modifier
+                </th>
+                <th>
+                    Supprimer
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for i in offres  %}
+                    <tr>
+                        <td>
+                            {{  i.titre }}
+                        </td>
+                        <td>
+                            {{ i.duree }}
+                        </td>
+                        <td>
+                            {{  i.type }}
+                        </td>
+                        <td>
+                            {{  i.salaire }}
+                        </td>
+                        <td>
+                            {{  i.dateDebut|date("d-m-Y" ) }}
+                        </td>
+                        <td>
+                            {{  i.DateFin|date("d-m-Y") }}
+                        </td>
+                        <td>
+                            <a href="{{ path('lpsio_plateforme_administration_modifier_offre', {'idOffre':i.id}) }}" title="Modifier cette offre">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@" title="Supprimer cette offre">
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 {% endblock %}

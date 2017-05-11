@@ -144,6 +144,16 @@ class DefaultController extends Controller
 
     public function visualiserOffresAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:about.html.twig');
+        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+        $offres = $repositoryOffre->findBy
+        (
+            array(),
+            array('dateCreation' => 'DESC'),
+            null,
+            null
+        );
+
+        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig',array('offres' => $offres));
     }
 }
