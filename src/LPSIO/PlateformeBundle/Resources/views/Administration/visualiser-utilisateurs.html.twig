@@ -45,73 +45,42 @@
 
 {% block mainbody %}
     <h1>Visualiser utilisateurs</h1>
-    {#   {{ dump(utilisateurs) }} #}
-    <div class="panel panel-primary">
-        <!-- Default panel contents -->
-        <div class="panel-heading">Liste des utilisateurs existants dans la base de données</div>
-
-        <!-- Table -->
-        <table class="table">
-            <thead>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Adresse</th>
+            <th>Courriel</th>
+            <th>Date inscription</th>
+            <th>Gérer</th>
+            <th>Supprimer</th>
+        <tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
             <tr>
-                <th>
-                    Nom
-                </th>
-                <th>
-                    Prenom
-                </th>
-                <th>
-                    Adresse
-                </th>
-                <th>
-                    Courriel
-                </th>
-                <th>
-                    Date inscription
-                </th>
-                <th>
-                    Gérer
-                </th><th>
-                    Supprimer
-                </th>
-            <tr>
-            </thead>
-            <tbody>
-            {% for utilisateur in utilisateurs %}
-                <tr>
-                    <td>
-                        {{ utilisateur.nom }}
-                    </td>
-                    <td>
-                        {{ utilisateur.prenom }}
-                    </td>
-                    <td>
-                        {{ utilisateur.adresse }} <br>
-                        {{ utilisateur.ville }} , {{ utilisateur.pays }}
-                    </td>
-                    <td>
-                        {{ utilisateur.courriel }}
-                    </td>
-                    <td>
-                        {{ utilisateur.dateInscription|date('d-m-Y') }}
-                    </td>
-                    <td>
-                        <a href="{{ path('lpsio_plateforme_administration_modifier_utilisateur', {'idUtilisateur':utilisateur.id}) }}" title="Gérer cet utilisateur">
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ path('lpsio_plateforme_administration_supprimer_utilisateur', {'idUtilisateur':utilisateur.id}) }}" title="Supprimer cet utilisateur">
-                            <button type="button" class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                <td>{{ utilisateur.nom }}</td>
+                <td>{{ utilisateur.prenom }}</td>
+                <td>{{ utilisateur.adresse }} - {{ utilisateur.ville }} - {{ utilisateur.pays }}</td>
+                <td>{{ utilisateur.courriel }}</td>
+                <td>{{ utilisateur.dateInscription|date('d-m-Y') }}</td>
+                <td>
+                    <a href="{{ path('lpsio_plateforme_administration_modifier_utilisateur', {'idUtilisateur':utilisateur.id}) }}" title="Gérer cet utilisateur">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('lpsio_plateforme_administration_supprimer_utilisateur', {'idUtilisateur':utilisateur.id}) }}" title="Supprimer cet utilisateur">
+                        <button type="button" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
