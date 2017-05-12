@@ -47,7 +47,7 @@ class DefaultController extends Controller
 
         $authenticationUtils = $this->get('security.authentication_utils');
 
-        return $this->render('LPSIOPlateformeBundle:Default:login.html.twig');
+        return $this->render('LPSIOPlateformeBundle:Default:login.html.twig', array('error' => $authenticationUtils->getLastAuthenticationError()));
     }
 
     public function informationsAction()
@@ -399,7 +399,7 @@ class DefaultController extends Controller
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
-            
+
             $em = $this->getDoctrine()->getManager();
             $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 

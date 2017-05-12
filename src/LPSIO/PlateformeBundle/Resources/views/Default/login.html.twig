@@ -44,6 +44,9 @@
 {% endblock %}
 
 {% block mainbody %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+    {% endif %}
     <h1>Connexion à l'espace membre</h1>
     <form action="{{ path('lpsio_plateforme_login_check') }}" method="post">
         <div class="form-group">
