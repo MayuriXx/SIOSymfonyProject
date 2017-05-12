@@ -255,4 +255,29 @@ class DefaultController extends Controller
         return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_offres');
 
     }
+
+    public function modifierUtilisateurAction($idUtilisateur)
+    {
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+
+        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+
+        if(!$utilisateur)
+        {
+            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+        }
+
+        $builder = $this->createFormBuilder($utilisateur)
+            ->add('nom', TextType::class, array('label' => 'Nom '))
+            ->add('prenom', TextType::class, array('label' => 'Prénom '))
+            ->add('courriel', EmailType::class, array('label' => 'Courriel '))
+            ->add('adresse', TextareaType::class, array('label' => 'Adresse '))
+            ->add('ville', TextType::class, array('label' => 'Ville '))
+            ->add('pays', TextType::class, array('label' => 'Pays '))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer '));
+
+        $form = $builder->getForm();
+
+        return $this->render('LPSIOPlateformeBundle:Administration:modifier-utilisateur.html.twig', array('form' => $form->createView(),'utilisateur'=> $utilisateur));
+    }
 }
