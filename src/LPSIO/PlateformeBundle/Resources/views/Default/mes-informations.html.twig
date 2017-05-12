@@ -38,4 +38,11 @@
 
 {% block mainbody %}
     <h1>Mes informations</h1>
+    <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+    <p>Informations générales : </p>
+    <p>Adresse email : {{ utilisateur.courriel }}</p>
+    <p>Adresse : {{ utilisateur.adresse }}</p>
+    <p>Pays : {{ utilisateur.pays }}</p>
+    <p>Date d'inscription : {{ utilisateur.dateInscription|date("d-m-Y h\\H-m\\M-s\\S" ) }}<h4>
+
 {% endblock %}

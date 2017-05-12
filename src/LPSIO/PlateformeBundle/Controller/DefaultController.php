@@ -47,7 +47,17 @@ class DefaultController extends Controller
 
     public function informationsAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig');
+        $idUtilisateur = 2;
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+
+        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+
+        if(!$utilisateur)
+        {
+            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+        }
+
+        return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig',array('utilisateur' => $utilisateur));
     }
 
     public function aboutAction()
