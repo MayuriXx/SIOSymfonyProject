@@ -41,6 +41,12 @@ class DefaultController extends Controller
 
     public function loginAction(Request $request)
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('lpsio_plateforme_homepage');
+        }
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
         return $this->render('LPSIOPlateformeBundle:Default:login.html.twig');
     }
 

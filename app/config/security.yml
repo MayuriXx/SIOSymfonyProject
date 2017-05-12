@@ -2,10 +2,18 @@
 # http://symfony.com/doc/current/security.html
 security:
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    encoders:
+        LPSIO\PlateformeBundle\Entity\Utilisateur: plaintext
+
     providers:
-        in_memory:
-            memory: ~
+        main:
+            entity:
+                class: LPSIO\PlateformeBundle\Entity\Utilisateur
+                property: courriel
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,11 +22,14 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            pattern: ^/
+            anonymous: true
+            provider: main
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            form_login:
+                login_path: /espace-membre/login
+                check_path: /espace-membre/login_check
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+            logout:
+                path: /espace-membre/logout
+                target: /espace-membre/login

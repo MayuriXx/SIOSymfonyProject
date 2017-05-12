@@ -36,6 +36,12 @@ lpsio_plateforme_login:
     path:    /espace-membre/login
     defaults: {_controller:LPSIOPlateformeBundle:Default:login }
 
+lpsio_plateforme_login_check:
+    path:   /espace-membre/login_check
+
+lpsio_plateforme_logout:
+    path:   /espace-membre/logout
+
 lpsio_plateforme_administration_creer_offre:
     path:    /administration/creer-offre
     defaults: {_controller:LPSIOPlateformeBundle:Default:creerOffre }
