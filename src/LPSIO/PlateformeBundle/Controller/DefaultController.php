@@ -255,4 +255,27 @@ class DefaultController extends Controller
         return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_offres');
 
     }
+
+    public function supprimerUtilisateurAction($idUtilisateur)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+
+        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+
+        if(!$utilisateur)
+        {
+            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+        }
+        else
+        {
+            $this->addFlash('notice','Suppression de l\'utilisateur  réussi.');
+
+            $em->remove($utilisateur);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_utilisateurs');
+
+    }
 }
