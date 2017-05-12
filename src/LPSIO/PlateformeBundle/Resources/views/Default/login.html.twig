@@ -9,22 +9,27 @@
             <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
             <li><a href="{{ path('lpsio_plateforme_offres') }}">Offres</a></li>
             <li><a href="{{ path('lpsio_plateforme_about') }}">A propos</a></li>
-            <li><a href="{{ path('lpsio_plateforme_inscription') }}">S'inscrire</a></li>
+            {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li><a href="{{ path('lpsio_plateforme_inscription') }}">S'inscrire</a></li>
+            {% endif %}
             <li><a href="{{ path('lpsio_plateforme_contact') }}">Nous contacter</a></li>
-            <li class="active"><a href="{{ path('lpsio_plateforme_login') }}">Connexion</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Espace membre<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
-                    <li><a href="{{ path('lpsio_plateforme_mes_alertes') }}">Mes alertes</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="{{ path('lpsio_plateforme_administration_creer_offre') }}">Créer une offre</a></li>
-                    <li><a href="{{ path('lpsio_plateforme_administration_visualiser_offres') }}">Visualiser les offres</a></li>
-                    <li><a href="{{ path('lpsio_plateforme_administration_visualiser_utilisateurs') }}">Visualiser les utilisateurs</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Déconnexion</a></li>
-                </ul>
-            </li>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Espace membre<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
+                        <li><a href="{{ path('lpsio_plateforme_mes_alertes') }}">Mes alertes</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ path('lpsio_plateforme_administration_creer_offre') }}">Créer une offre</a></li>
+                        <li><a href="{{ path('lpsio_plateforme_administration_visualiser_offres') }}">Visualiser les offres</a></li>
+                        <li><a href="{{ path('lpsio_plateforme_administration_visualiser_utilisateurs') }}">Visualiser les utilisateurs</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ path('lpsio_plateforme_logout') }}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="active"><a href="{{ path('lpsio_plateforme_login') }}">Connexion</a></li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

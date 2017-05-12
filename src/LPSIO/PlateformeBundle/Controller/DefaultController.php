@@ -52,17 +52,24 @@ class DefaultController extends Controller
 
     public function informationsAction()
     {
-        $idUtilisateur = 2;
-        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
-
-        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
-
-        if(!$utilisateur)
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
-        }
+            $idUtilisateur = 2;
+            $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
-        return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig',array('utilisateur' => $utilisateur));
+            $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+
+            if(!$utilisateur)
+            {
+                throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig',array('utilisateur' => $utilisateur));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function aboutAction()
@@ -72,35 +79,56 @@ class DefaultController extends Controller
 
     public function alertesAction()
     {
-        return $this->render('LPSIOPlateformeBundle:Default:alertes.html.twig');
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            return $this->render('LPSIOPlateformeBundle:Default:alertes.html.twig');
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function offreAction($idOffre)
     {
-        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
-
-        $offre = $repositoryOffre->find($idOffre);
-
-        if(!$offre)
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
-        }
+            $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
-        return $this->render('LPSIOPlateformeBundle:Default:offre.html.twig', array('offre' => $offre));
+            $offre = $repositoryOffre->find($idOffre);
+
+            if(!$offre)
+            {
+                throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Default:offre.html.twig', array('offre' => $offre));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function offresAction()
     {
-        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
-        $offres = $repositoryOffre->findBy(
-            array(),
-            array('dateCreation' => 'DESC'),
-            null,
-            null
-        );
+            $offres = $repositoryOffre->findBy(
+                array(),
+                array('dateCreation' => 'DESC'),
+                null,
+                null
+            );
 
-        return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
+            return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function contactAction(Request $request)
@@ -145,7 +173,7 @@ class DefaultController extends Controller
             ->add('ville', TextType::class, array('label' => 'Ville'))
             ->add('pays', TextType::class, array('label' => 'Pays'))
             ->add('courriel', EmailType::class, array('label' => 'Courriel'))
-            ->add('motDePasse', RepeatedType::class, array(
+            ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Répétez le mot de passe')))
@@ -159,176 +187,227 @@ class DefaultController extends Controller
 
     public function modifierOffreAction($idOffre)
     {
-        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
-
-        $offre = $repositoryOffre->find($idOffre);
-
-        if(!$offre)
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+            $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+            $offre = $repositoryOffre->find($idOffre);
+
+            if(!$offre)
+            {
+                throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+            }
+
+            $builder = $this->createFormBuilder($offre)
+                ->add('titre', TextType::class, array('label' => 'Titre'))
+                ->add('description', TextareaType::class, array('label' => 'Description'))
+                ->add('duree', IntegerType::class, array('label' => 'Durée'))
+                ->add('type', IntegerType::class, array('label' => 'Type'))
+                ->add('salaire', IntegerType::class, array('label' => 'Salaire (€)'))
+                ->add('dateCreation', DateType::class, array('label' => 'Date de création'))
+                ->add('dateDebut', DateType::class, array('label' => 'Date de début'))
+                ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
+                ->add('visible', CheckboxType::class, array('label' => 'Visible'))
+                ->add('save', SubmitType::class, array('label' => 'Sauvegarder'));
+
+            $form = $builder->getForm();
+
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-offre.html.twig', array('form' => $form->createView(),'offre'=> $offre));
         }
-
-        $builder = $this->createFormBuilder($offre)
-            ->add('titre', TextType::class, array('label' => 'Titre'))
-            ->add('description', TextareaType::class, array('label' => 'Description'))
-            ->add('duree', IntegerType::class, array('label' => 'Durée'))
-            ->add('type', IntegerType::class, array('label' => 'Type'))
-            ->add('salaire', IntegerType::class, array('label' => 'Salaire (€)'))
-            ->add('dateCreation', DateType::class, array('label' => 'Date de création'))
-            ->add('dateDebut', DateType::class, array('label' => 'Date de début'))
-            ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
-            ->add('visible', CheckboxType::class, array('label' => 'Visible'))
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'));
-
-        $form = $builder->getForm();
-
-        return $this->render('LPSIOPlateformeBundle:Administration:modifier-offre.html.twig', array('form' => $form->createView(),'offre'=> $offre));
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function visualiserUtilisateursAction()
     {
-        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
-        $utilisateurs = $repositoryUtilisateur->findBy(
-            array(),
-            array('nom' => 'ASC', 'prenom' => 'ASC'),
-            null,
-            null
-        );
-        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-utilisateurs.html.twig', array('utilisateurs' => $utilisateurs));
+            $utilisateurs = $repositoryUtilisateur->findBy(
+                array(),
+                array('nom' => 'ASC', 'prenom' => 'ASC'),
+                null,
+                null
+            );
+
+            return $this->render('LPSIOPlateformeBundle:Administration:visualiser-utilisateurs.html.twig', array('utilisateurs' => $utilisateurs));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function visualiserOffresAction()
     {
-        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
-        $offres = $repositoryOffre->findBy
-        (
-            array(),
-            array('dateCreation' => 'DESC'),
-            null,
-            null
-        );
+            $offres = $repositoryOffre->findBy
+            (
+                array(),
+                array('dateCreation' => 'DESC'),
+                null,
+                null
+            );
 
-        return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig',array('offres' => $offres));
+            return $this->render('LPSIOPlateformeBundle:Administration:visualiser-offres.html.twig',array('offres' => $offres));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
     public function creerOffreAction(Request $request)
     {
-        $offre = new Offre();
-
-        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $offre);
-
-        $formBuilder = $this->createFormBuilder($offre)
-            ->add('titre', TextType::class, array('label' => 'Titre'))
-            ->add('type', ChoiceType::class, array(
-                'choices'  => array(
-                    'Contrat d\'apprentissage' => 1,
-                    'Contrat de professionnalisation' => 2,
-                    'Stage' => 3,
-                    'Autre' => 4)))
-            ->add('description', TextareaType::class, array('label' => 'Description', 'required' => false))
-            ->add('dateDebut', DateType::class, array('label' => 'Date de début'))
-            ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
-            ->add('duree', IntegerType::class, array('label' => 'Durée'))
-            ->add('salaire', IntegerType::class, array('label' => 'Salaire'))
-            ->add('visible', CheckboxType::class, array('label' => 'Visible'))
-            ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
-            ->add('save', SubmitType::class, array('label' => 'Envoyer'));
-
-        $form = $formBuilder->getForm();
-
-        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $offre->setDateCreation(new \DateTime('now'));
+            $offre = new Offre();
 
-            $em = $this->getDoctrine()->getManager();
+            $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $offre);
 
-            $em->persist($offre);
-            $em->flush();
+            $formBuilder = $this->createFormBuilder($offre)
+                ->add('titre', TextType::class, array('label' => 'Titre'))
+                ->add('type', ChoiceType::class, array(
+                    'choices'  => array(
+                        'Contrat d\'apprentissage' => 1,
+                        'Contrat de professionnalisation' => 2,
+                        'Stage' => 3,
+                        'Autre' => 4)))
+                ->add('description', TextareaType::class, array('label' => 'Description', 'required' => false))
+                ->add('dateDebut', DateType::class, array('label' => 'Date de début'))
+                ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
+                ->add('duree', IntegerType::class, array('label' => 'Durée'))
+                ->add('salaire', IntegerType::class, array('label' => 'Salaire'))
+                ->add('visible', CheckboxType::class, array('label' => 'Visible'))
+                ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
+                ->add('save', SubmitType::class, array('label' => 'Envoyer'));
 
-            $this->addFlash('notice','Ajout de l\'offre réussie');
+            $form = $formBuilder->getForm();
+
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+            {
+                $offre->setDateCreation(new \DateTime('now'));
+
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($offre);
+                $em->flush();
+
+                $this->addFlash('notice','Ajout de l\'offre réussie');
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Administration:creer-offre.html.twig', array('form' => $form->createView()));
         }
-
-        return $this->render('LPSIOPlateformeBundle:Administration:creer-offre.html.twig', array('form' => $form->createView()));
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 
 
     public function supprimerOffreAction($idOffre)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
-
-        $offre = $repositoryOffre->find($idOffre);
-
-        if(!$offre)
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+            $em = $this->getDoctrine()->getManager();
+            $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
+
+            $offre = $repositoryOffre->find($idOffre);
+
+            if(!$offre)
+            {
+                throw new NotFoundHttpException("L'offre ".$idOffre." n'existe pas.");
+            }
+            else
+            {
+                $this->addFlash('notice','Suppression de l\'offre  réussie.');
+
+                $em->remove($offre);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_offres');
         }
         else
         {
-            $this->addFlash('notice','Suppression de l\'offre  réussie.');
-
-            $em->remove($offre);
-            $em->flush();
+            return $this->redirectToRoute('lpsio_plateforme_login');
         }
-
-        return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_offres');
-
     }
-
 
     public function modifierUtilisateurAction($idUtilisateur, Request $request)
     {
-        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
-
-        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
-
-        if(!$utilisateur)
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
-        }
+            $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
-        $builder = $this->createFormBuilder($utilisateur)
-            ->add('nom', TextType::class, array('label' => 'Nom '))
-            ->add('prenom', TextType::class, array('label' => 'Prénom '))
-            ->add('courriel', EmailType::class, array('label' => 'Courriel '))
-            ->add('adresse', TextType::class, array('label' => 'Adresse '))
-            ->add('ville', TextType::class, array('label' => 'Ville '))
-            ->add('pays', TextType::class, array('label' => 'Pays '))
-            ->add('save', SubmitType::class, array('label' => 'Enregistrer '));
+            $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
 
-        $form = $builder->getForm();
+            if(!$utilisateur)
+            {
+                throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+            }
 
-        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
+            $builder = $this->createFormBuilder($utilisateur)
+                ->add('nom', TextType::class, array('label' => 'Nom '))
+                ->add('prenom', TextType::class, array('label' => 'Prénom '))
+                ->add('courriel', EmailType::class, array('label' => 'Courriel '))
+                ->add('adresse', TextType::class, array('label' => 'Adresse '))
+                ->add('ville', TextType::class, array('label' => 'Ville '))
+                ->add('pays', TextType::class, array('label' => 'Pays '))
+                ->add('save', SubmitType::class, array('label' => 'Enregistrer '));
 
-            $em->persist($utilisateur);
-            $em->flush();
+            $form = $builder->getForm();
 
-            $this->addFlash('notice','Modification de l\'utilisateur réussie');
-        }
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+            {
+                $em = $this->getDoctrine()->getManager();
 
-        return $this->render('LPSIOPlateformeBundle:Administration:modifier-utilisateur.html.twig', array('form' => $form->createView(),'utilisateur'=> $utilisateur));
-    }
+                $em->persist($utilisateur);
+                $em->flush();
 
+                $this->addFlash('notice','Modification de l\'utilisateur réussie');
+            }
 
-    public function supprimerUtilisateurAction($idUtilisateur)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
-        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
-        if(!$utilisateur)
-        {
-            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-utilisateur.html.twig', array('form' => $form->createView(),'utilisateur'=> $utilisateur));
         }
         else
         {
-            $this->addFlash('notice','Suppression de l\'utilisateur  réussi.');
-            $em->remove($utilisateur);
-            $em->flush();
+            return $this->redirectToRoute('lpsio_plateforme_login');
         }
-        return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_utilisateurs');
+    }
+
+    public function supprimerUtilisateurAction($idUtilisateur)
+    {
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $em = $this->getDoctrine()->getManager();
+            $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+
+            $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+
+            if(!$utilisateur)
+            {
+                throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+            }
+            else
+            {
+                $this->addFlash('notice','Suppression de l\'utilisateur  réussi.');
+
+                $em->remove($utilisateur);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_utilisateurs');
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
     }
 }
