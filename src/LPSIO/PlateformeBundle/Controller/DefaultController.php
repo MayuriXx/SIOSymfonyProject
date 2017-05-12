@@ -256,6 +256,7 @@ class DefaultController extends Controller
 
     }
 
+
     public function modifierUtilisateurAction($idUtilisateur)
     {
         $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
@@ -279,5 +280,24 @@ class DefaultController extends Controller
         $form = $builder->getForm();
 
         return $this->render('LPSIOPlateformeBundle:Administration:modifier-utilisateur.html.twig', array('form' => $form->createView(),'utilisateur'=> $utilisateur));
+    }
+
+
+    public function supprimerUtilisateurAction($idUtilisateur)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+        $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+        if(!$utilisateur)
+        {
+            throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
+        }
+        else
+        {
+            $this->addFlash('notice','Suppression de l\'utilisateur  réussi.');
+            $em->remove($utilisateur);
+            $em->flush();
+        }
+        return $this->redirectToRoute('lpsio_plateforme_administration_visualiser_utilisateurs');
     }
 }
