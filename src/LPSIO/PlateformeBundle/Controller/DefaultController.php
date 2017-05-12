@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -200,38 +199,32 @@ class DefaultController extends Controller
                     'Contrat de professionnalisation' => 2,
                     'Stage' => 3,
                     'Autre' => 4)))
-            ->add('description', TextareaType::class, array('label' => 'Description'))
-            ->add('dateDebut', DateType::class, array('widget' => 'choice','label' => 'Date de début'))
-            ->add('dateFin', DateType::class, array('widget' => 'choice','label' => 'Date de fin'))
-            //->add('duree', TextType::class, array('label' => 'Durée'))
-            ->add('salaire', TextType::class, array('label' => 'Salaire'))
+            ->add('description', TextareaType::class, array('label' => 'Description', 'required' => false))
+            ->add('dateDebut', DateType::class, array('label' => 'Date de début'))
+            ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
+            ->add('duree', IntegerType::class, array('label' => 'Durée'))
+            ->add('salaire', IntegerType::class, array('label' => 'Salaire'))
+            ->add('visible', CheckboxType::class, array('label' => 'Visible'))
             ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
             ->add('save', SubmitType::class, array('label' => 'Envoyer'));
 
         $form = $formBuilder->getForm();
 
-        // Si la requête est en POST
-        if ($request->isMethod('POST')) {
-            // On fait le lien Requête <-> Formulaire
-            // À partir de maintenant, la variable $advert contient les valeurs entrées dans le formulaire par le visiteur
-            $form->handleRequest($request);
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        {
+            $offre->setDateCreation(new \DateTime('now'));
 
-            // On vérifie que les valeurs entrées sont correctes
-            // (Nous verrons la validation des objets en détail dans le prochain chapitre)
-            if ($form->isValid()) {
-                // On enregistre notre objet $advert dans la base de données, par exemple
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($offre);
-                $em->flush();
+            $em = $this->getDoctrine()->getManager();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Offre bien enregistrée.');
+            $em->persist($offre);
+            $em->flush();
 
-                // On redirige vers la page de visualisation de l'annonce nouvellement créé
-            }
+            $this->addFlash('notice','Ajout de l\'offre réussie');
         }
 
         return $this->render('LPSIOPlateformeBundle:Administration:creer-offre.html.twig', array('form' => $form->createView()));
     }
+
 
     public function supprimerOffreAction($idOffre)
     {
