@@ -97,7 +97,7 @@ class DefaultController extends Controller
         return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
     }
 
-    public function contactAction()
+    public function contactAction(Request $request)
     {
         $contact = new Contact();
 
@@ -107,11 +107,23 @@ class DefaultController extends Controller
             ->add('nom', TextType::class, array('label' => 'Nom'))
             ->add('prenom', TextType::class, array('label' => 'Prénom'))
             ->add('courriel', EmailType::class, array('label' => 'Courriel'))
-            ->add('message', TextareaType::class, array('label' => 'Message'))
+            ->add('message', TextareaType::class, array('label' => 'Message', 'required' => false))
             ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
             ->add('save', SubmitType::class, array('label' => 'Envoyer'));
 
         $form = $formBuilder->getForm();
+
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        {
+            $contact->setDateContact(new \DateTime('now'));
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($contact);
+            $em->flush();
+
+            $this->addFlash('notice','Votre message a été envoyé.');
+        }
 
         return $this->render('LPSIOPlateformeBundle:Default:contact.html.twig', array('form' => $form->createView()));
     }
