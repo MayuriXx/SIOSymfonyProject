@@ -89,14 +89,14 @@
                         {{ utilisateur.dateInscription|date('d-m-Y') }}
                     </td>
                     <td>
-                        <a href="#" title="Gérer cet utilisateur">
+                        <a href="{{ path('lpsio_plateforme_administration_modifier_utilisateur', {'idUtilisateur':utilisateur.id}) }}" title="Gérer cet utilisateur">
                             <button type="button" class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                         </a>
                     </td>
                     <td>
-                        <a href="#" title="Supprimer cet utilisateur">
+                        <a href="{{ path('lpsio_plateforme_administration_supprimer_utilisateur', {'idUtilisateur':utilisateur.id}) }}" title="Supprimer cet utilisateur">
                              <button type="button" class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-trash"></span>
                              </button>
