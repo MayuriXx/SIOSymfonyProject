@@ -44,8 +44,6 @@
 {% endblock %}
 
 {% block mainbody %}
-
-    {{ app.session.username }}
     {% if app.session.flashBag('notice') %}
         {% for msg in app.session.flashBag.get('notice') %}
             <div class="alert alert-success alert-dismissable">

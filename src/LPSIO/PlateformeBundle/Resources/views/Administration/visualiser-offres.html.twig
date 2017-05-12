@@ -92,13 +92,25 @@
                         {{  i.titre }}
                     </td>
                     <td>
-                        {{ i.duree }}
+                        {{ i.duree }} jours
                     </td>
                     <td>
-                        {{  i.type }}
+                        {# 1 : Contrat d'apprentissage #}
+                        {# 2 : Contrat de professionnalisation #}
+                        {# 3 : Stage #}
+                        {# Autre : inconnu #}
+                        {% if i.type == "1" %}
+                            <strong>Contrat d'apprentissage</strong>
+                        {% elseif i.type == "2" %}
+                            <strong>Contrat de professionnalisation</strong>
+                        {% elseif i.type == "3" %}
+                            <strong>Stage</strong>
+                        {% else %}
+                            <strong>Inconnu</strong>
+                        {% endif %}
                     </td>
                     <td>
-                        {{  i.salaire }}
+                        {{  i.salaire }} euros
                     </td>
                     <td>
                         {{  i.dateDebut|date("d-m-Y" ) }}

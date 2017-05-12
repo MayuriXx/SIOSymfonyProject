@@ -54,7 +54,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $idUtilisateur = 2;
+            /*
             $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
             $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
@@ -63,8 +63,9 @@ class DefaultController extends Controller
             {
                 throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
             }
+            */
 
-            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig',array('utilisateur' => $utilisateur));
+            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig');
         }
         else
         {
