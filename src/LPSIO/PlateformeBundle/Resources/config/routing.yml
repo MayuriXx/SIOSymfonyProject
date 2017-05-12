@@ -58,6 +58,12 @@ lpsio_plateforme_administration_supprimer_offre:
     requirements:
         idoffre: \d+
 
+lpsio_plateforme_administration_modifier_utilisateur:
+    path:    /administration/modifier-utilisateur/{idUtilisateur}
+    defaults: {_controller:LPSIOPlateformeBundle:Default:modifierUtilisateur }
+    requirements:
+            idutilisateur: \d+
+
 lpsio_plateforme_administration_supprimer_utilisateur:
     path:    /administration/supprimer-utilisateur/{idUtilisateur}
     defaults: {_controller:LPSIOPlateformeBundle:Default:supprimerUtilisateur }
