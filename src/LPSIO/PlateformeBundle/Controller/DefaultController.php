@@ -162,7 +162,7 @@ class DefaultController extends Controller
         return $this->render('LPSIOPlateformeBundle:Default:contact.html.twig', array('form' => $form->createView()));
     }
 
-    public function inscriptionAction()
+    public function inscriptionAction(Request $request)
     {
         $utilisateur = new Utilisateur();
 
@@ -181,6 +181,21 @@ class DefaultController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Valider'));
 
         $form = $builder->getForm();
+
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        {
+            $utilisateur->setUsername($form['courriel']->getData());
+            $utilisateur->setDateInscription(new \DateTime());
+            $utilisateur->setSalt('');
+            $utilisateur->setRoles(array('ROLE_USER'));
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($utilisateur);
+            $em->flush();
+
+            $this->addFlash('notice','Inscription réussie !');
+        }
 
         return $this->render('LPSIOPlateformeBundle:Default:inscription.html.twig', array('form' => $form->createView()));
     }
