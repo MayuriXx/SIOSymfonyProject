@@ -250,7 +250,7 @@ class DefaultController extends Controller
     }
 
 
-    public function modifierUtilisateurAction($idUtilisateur)
+    public function modifierUtilisateurAction($idUtilisateur, Request $request)
     {
         $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
@@ -265,12 +265,22 @@ class DefaultController extends Controller
             ->add('nom', TextType::class, array('label' => 'Nom '))
             ->add('prenom', TextType::class, array('label' => 'Prénom '))
             ->add('courriel', EmailType::class, array('label' => 'Courriel '))
-            ->add('adresse', TextareaType::class, array('label' => 'Adresse '))
+            ->add('adresse', TextType::class, array('label' => 'Adresse '))
             ->add('ville', TextType::class, array('label' => 'Ville '))
             ->add('pays', TextType::class, array('label' => 'Pays '))
             ->add('save', SubmitType::class, array('label' => 'Enregistrer '));
 
         $form = $builder->getForm();
+
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($utilisateur);
+            $em->flush();
+
+            $this->addFlash('notice','Modification de l\'utilisateur réussie');
+        }
 
         return $this->render('LPSIOPlateformeBundle:Administration:modifier-utilisateur.html.twig', array('form' => $form->createView(),'utilisateur'=> $utilisateur));
     }
