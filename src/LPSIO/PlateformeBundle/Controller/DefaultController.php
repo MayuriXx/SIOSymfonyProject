@@ -204,7 +204,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
@@ -241,7 +241,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
@@ -264,7 +264,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
@@ -288,7 +288,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $offre = new Offre();
 
@@ -338,7 +338,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $em = $this->getDoctrine()->getManager();
             $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
@@ -369,7 +369,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
 
@@ -413,7 +413,7 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $this->denyAccessUnlessGranted('ROLE_SUER_ADMIN', null, 'Accès non autorisé.');
+            $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Accès non autorisé.');
 
             $em = $this->getDoctrine()->getManager();
             $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
