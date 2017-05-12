@@ -19,10 +19,12 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
                         <li><a href="{{ path('lpsio_plateforme_mes_alertes') }}">Mes alertes</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ path('lpsio_plateforme_administration_creer_offre') }}">Créer une offre</a></li>
-                        <li><a href="{{ path('lpsio_plateforme_administration_visualiser_offres') }}">Visualiser les offres</a></li>
-                        <li class="active"><a href="{{ path('lpsio_plateforme_administration_visualiser_utilisateurs') }}">Visualiser les utilisateurs</a></li>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ path('lpsio_plateforme_administration_creer_offre') }}">Créer une offre</a></li>
+                            <li><a href="{{ path('lpsio_plateforme_administration_visualiser_offres') }}">Visualiser les offres</a></li>
+                            <li class="active"><a href="{{ path('lpsio_plateforme_administration_visualiser_utilisateurs') }}">Visualiser les utilisateurs</a></li>
+                        {% endif %}
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ path('lpsio_plateforme_logout') }}">Déconnexion</a></li>
                     </ul>
