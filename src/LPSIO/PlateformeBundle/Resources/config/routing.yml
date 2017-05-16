@@ -21,8 +21,10 @@ lpsio_plateforme_offre:
         idoffre: \d+
 
 lpsio_plateforme_offres:
-    path:    /offres
-    defaults: {_controller:LPSIOPlateformeBundle:Default:offres }
+    path:    /offres/{page}
+    defaults: {_controller:LPSIOPlateformeBundle:Default:offres, page: 1}
+    requirements:
+        page: \d+
 
 lpsio_plateforme_mes_informations:
     path:    /espace-membre/mes-informations
