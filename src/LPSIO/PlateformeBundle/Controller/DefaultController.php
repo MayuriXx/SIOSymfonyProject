@@ -166,6 +166,14 @@ class DefaultController extends Controller
             $em->persist($contact);
             $em->flush();
 
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Votre demande de contact avec LPSIO")
+                ->setFrom("contact@lpsio.fr")
+                ->setTo($contact->getCourriel())
+                ->setBody($this->renderView('LPSIOPlateformeBundle:Emails:message-contact.html.twig', array('contact' => $contact)),'text/html');
+
+            $this->get('mailer')->send($message);
+
             $this->addFlash('notice','Votre message a été envoyé.');
         }
 
