@@ -41,7 +41,8 @@ class DefaultController extends Controller
 
     public function loginAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
             return $this->redirectToRoute('lpsio_plateforme_homepage');
         }
 
@@ -54,18 +55,9 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            /*
-            $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+            $utilisateur = $this->getUser();
 
-            $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
-
-            if(!$utilisateur)
-            {
-                throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
-            }
-            */
-
-            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig');
+            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig', array('utilisateur' => $utilisateur));
         }
         else
         {
