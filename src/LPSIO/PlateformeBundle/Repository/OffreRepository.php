@@ -2,6 +2,8 @@
 
 namespace LPSIO\PlateformeBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 /**
  * OffreRepository
  *
@@ -10,4 +12,14 @@ namespace LPSIO\PlateformeBundle\Repository;
  */
 class OffreRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOffresParPage($page, $offreParPage)
+    {
+        $query = $this->createQueryBuilder('o')
+            ->orderBy('o.dateCreation', 'DESC')
+            ->getQuery();
+
+        $query->setFirstResult(($page - 1) * $offreParPage)->setMaxResults($offreParPage);
+
+        return new Paginator($query, true);
+    }
 }
