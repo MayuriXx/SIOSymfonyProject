@@ -111,20 +111,29 @@ class DefaultController extends Controller
         }
     }
 
-    public function offresAction()
+    public function offresAction($page)
     {
+        if($page < 1)
+        {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas");
+        }
+
+        $offresParPage = $this->container->getParameter('offres_par_page');
+
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
-            $offres = $repositoryOffre->findBy(
-                array(),
-                array('dateCreation' => 'DESC'),
-                null,
-                null
-            );
+            $offres = $repositoryOffre->getOffresParPage($page, $offresParPage);
 
-            return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
+            $nombreDePages = ceil(count($offres) / $offresParPage);
+
+            if ($page > $nombreDePages)
+            {
+                throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres, 'nombreDePages' => $nombreDePages, 'page' => $page));
         }
         else
         {
