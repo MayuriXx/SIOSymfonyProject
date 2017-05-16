@@ -12,13 +12,13 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class OffreRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getOffresParPage($page, $offreParPage)
+    public function getOffresParPage($page, $offresParPage)
     {
         $query = $this->createQueryBuilder('o')
             ->orderBy('o.dateCreation', 'DESC')
             ->getQuery();
 
-        $query->setFirstResult(($page - 1) * $offreParPage)->setMaxResults($offreParPage);
+        $query->setFirstResult(($page - 1) * $offresParPage)->setMaxResults($offresParPage);
 
         return new Paginator($query, true);
     }
