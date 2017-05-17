@@ -50,4 +50,6 @@
     <p>Adresse : {{ utilisateur.adresse }}, {{ utilisateur.ville }}</p>
     <p>Pays : {{ utilisateur.pays }}</p>
     <p>Date d'inscription : {{ utilisateur.dateInscription|date("d-m-Y") }}</p>
+    <p><a class="btn btn-default" href="{{ path('lpsio_plateforme_modifier_mes_informations') }}">Modifier mes informations</a></p>
+    <p><a class="btn btn-default" href="{{ path('lpsio_plateforme_modifier_mon_mot_de_passe') }}">Modifier mon mot de passe</a></p>
 {% endblock %}
