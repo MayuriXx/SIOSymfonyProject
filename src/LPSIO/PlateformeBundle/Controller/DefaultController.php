@@ -65,6 +65,34 @@ class DefaultController extends Controller
         }
     }
 
+    public function modifierMesInformationsAction()
+    {
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $utilisateur = $this->getUser();
+
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mes-informations.html.twig', array('utilisateur' => $utilisateur));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
+    }
+
+    public function modifierMonMotDePasseAction()
+    {
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $utilisateur = $this->getUser();
+
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mot-de-passe.html.twig', array('utilisateur' => $utilisateur));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
+    }
+
     public function aboutAction()
     {
         return $this->render('LPSIOPlateformeBundle:Default:about.html.twig');
