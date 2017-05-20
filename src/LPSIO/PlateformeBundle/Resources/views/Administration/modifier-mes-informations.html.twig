@@ -1,7 +1,7 @@
 {# src/LPSIO/PlateformeBundle/Ressources/views/base.html.twig #}
 {% extends "LPSIOPlateformeBundle::base.html.twig" %}
 
-{% block title %}{{ parent() }} - Mes informations{% endblock %}
+{% block title %}{{ parent() }} - Modifier mes informations{% endblock %}
 
 {% block navbar %}
     <div id="navbar" class="navbar-collapse collapse">
@@ -39,17 +39,12 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="{{ path('lpsio_plateforme_homepage') }}">Accueil</a></li>
-        <li class="active">Mes informations</li>
+        <li><a href="{{ path('lpsio_plateforme_mes_informations') }}">Mes informations</a></li>
+        <li class="active">Modifier mes informations</li>
     </ol>
 {% endblock %}
 
 {% block mainbody %}
-    <h1>Mes informations</h1>
-    <p>Nom et prénom : {{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
-    <p>Adresse email : {{ utilisateur.courriel }}</p>
-    <p>Adresse : {{ utilisateur.adresse }}, {{ utilisateur.ville }}</p>
-    <p>Pays : {{ utilisateur.pays }}</p>
-    <p>Date d'inscription : {{ utilisateur.dateInscription|date("d-m-Y") }}</p>
-    <p><a class="btn btn-default" href="{{ path('lpsio_plateforme_modifier_mes_informations') }}">Modifier mes informations</a></p>
-    <p><a class="btn btn-default" href="{{ path('lpsio_plateforme_modifier_mon_mot_de_passe') }}">Modifier mon mot de passe</a></p>
+    <h1>Modifier mes informations</h1>
+    <p>Fonctionnalité non disponible pour le moment.</p>
 {% endblock %}

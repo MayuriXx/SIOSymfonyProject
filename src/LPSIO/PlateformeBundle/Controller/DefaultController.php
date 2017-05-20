@@ -41,7 +41,8 @@ class DefaultController extends Controller
 
     public function loginAction(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
             return $this->redirectToRoute('lpsio_plateforme_homepage');
         }
 
@@ -54,18 +55,37 @@ class DefaultController extends Controller
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            /*
-            $repositoryUtilisateur = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Utilisateur');
+            $utilisateur = $this->getUser();
 
-            $utilisateur = $repositoryUtilisateur->find($idUtilisateur);
+            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig', array('utilisateur' => $utilisateur));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
+    }
 
-            if(!$utilisateur)
-            {
-                throw new NotFoundHttpException("L'utilisateur ".$idUtilisateur." n'existe pas.");
-            }
-            */
+    public function modifierMesInformationsAction()
+    {
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $utilisateur = $this->getUser();
 
-            return $this->render('LPSIOPlateformeBundle:Default:mes-informations.html.twig');
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mes-informations.html.twig', array('utilisateur' => $utilisateur));
+        }
+        else
+        {
+            return $this->redirectToRoute('lpsio_plateforme_login');
+        }
+    }
+
+    public function modifierMonMotDePasseAction()
+    {
+        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $utilisateur = $this->getUser();
+
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mot-de-passe.html.twig', array('utilisateur' => $utilisateur));
         }
         else
         {
@@ -111,20 +131,29 @@ class DefaultController extends Controller
         }
     }
 
-    public function offresAction()
+    public function offresAction($page)
     {
+        if($page < 1)
+        {
+            throw $this->createNotFoundException("La page ".$page." n'existe pas");
+        }
+
+        $offresParPage = $this->container->getParameter('offres_par_page');
+
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             $repositoryOffre = $this->getDoctrine()->getRepository('LPSIOPlateformeBundle:Offre');
 
-            $offres = $repositoryOffre->findBy(
-                array(),
-                array('dateCreation' => 'DESC'),
-                null,
-                null
-            );
+            $offres = $repositoryOffre->getOffresParPage($page, $offresParPage);
 
-            return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres));
+            $nombreDePages = ceil(count($offres) / $offresParPage);
+
+            if ($page > $nombreDePages)
+            {
+                throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Default:offres.html.twig', array('offres' => $offres, 'nombreDePages' => $nombreDePages, 'page' => $page));
         }
         else
         {
@@ -156,6 +185,14 @@ class DefaultController extends Controller
 
             $em->persist($contact);
             $em->flush();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Votre demande de contact avec LPSIO")
+                ->setFrom("contact@lpsio.fr")
+                ->setTo($contact->getCourriel())
+                ->setBody($this->renderView('LPSIOPlateformeBundle:Emails:message-contact.html.twig', array('contact' => $contact)),'text/html');
+
+            $this->get('mailer')->send($message);
 
             $this->addFlash('notice','Votre message a été envoyé.');
         }

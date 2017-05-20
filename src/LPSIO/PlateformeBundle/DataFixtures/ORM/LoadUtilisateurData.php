@@ -19,7 +19,7 @@ class LoadUtilisateurData implements FixtureInterface
         $utilisateur->setPrenom("Marc-Antoine");
         $utilisateur->setCourriel("marcantoinehayet@gmail.com");
         $utilisateur->setUsername("marcantoinehayet@gmail.com");
-        $utilisateur->setAdresse("7 HAMEAU DE MARSIGNIES, 59149 COUSOLRE");
+        $utilisateur->setAdresse("7 HAMEAU DE MARSIGNIES");
         $utilisateur->setVille("COUSOLRE");
         $utilisateur->setPays("FRANCE");
         $utilisateur->setDateInscription(new \DateTime());

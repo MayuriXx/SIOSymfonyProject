@@ -21,12 +21,22 @@ lpsio_plateforme_offre:
         idoffre: \d+
 
 lpsio_plateforme_offres:
-    path:    /offres
-    defaults: {_controller:LPSIOPlateformeBundle:Default:offres }
+    path:    /offres/{page}
+    defaults: {_controller:LPSIOPlateformeBundle:Default:offres, page: 1}
+    requirements:
+        page: \d+
 
 lpsio_plateforme_mes_informations:
     path:    /espace-membre/mes-informations
     defaults: {_controller:LPSIOPlateformeBundle:Default:informations }
+
+lpsio_plateforme_modifier_mes_informations:
+    path:    /espace-membre/modifier-mes-informations
+    defaults: {_controller:LPSIOPlateformeBundle:Default:modifierMesInformations }
+
+lpsio_plateforme_modifier_mon_mot_de_passe:
+    path:    /espace-membre/modifier-mon-mot-de-passe
+    defaults: {_controller:LPSIOPlateformeBundle:Default:modifierMonMotDePasse }
 
 lpsio_plateforme_mes_alertes:
     path:    /espace-membre/mes-alertes
