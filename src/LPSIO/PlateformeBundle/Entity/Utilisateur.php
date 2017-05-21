@@ -25,7 +25,7 @@ class Utilisateur implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=255, nullable=false, unique=true,)
+     * @ORM\Column(name="mail", type="string", length=255, nullable=false, unique=true)
      */
     private $courriel;
 
@@ -77,7 +77,7 @@ class Utilisateur implements UserInterface
     private $dateInscription;
 
     /**
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(name="username", type="string", length=255, unique=true, nullable=false)
      */
     private $username;
 

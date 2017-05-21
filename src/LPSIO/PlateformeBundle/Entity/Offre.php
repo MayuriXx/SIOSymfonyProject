@@ -24,35 +24,35 @@ class Offre
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
      */
     private $titre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="duree", type="integer")
+     * @ORM\Column(name="duree", type="integer", nullable=false)
      */
     private $duree;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="type", type="integer")
+     * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="salaire", type="integer")
+     * @ORM\Column(name="salaire", type="integer", nullable=false)
      */
     private $salaire;
 
