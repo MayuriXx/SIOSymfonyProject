@@ -65,13 +65,37 @@ class DefaultController extends Controller
         }
     }
 
-    public function modifierMesInformationsAction()
+    public function modifierMesInformationsAction(Request $request)
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             $utilisateur = $this->getUser();
 
-            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mes-informations.html.twig', array('utilisateur' => $utilisateur));
+            $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $utilisateur);
+
+            $formBuilder = $this->createFormBuilder($utilisateur)
+                ->add('nom', TextType::class, array('label' => 'Nom'))
+                ->add('prenom', TextType::class, array('label' => 'Prénom'))
+                ->add('courriel', EmailType::class, array('label' => 'Courriel'))
+                ->add('adresse', TextType::class, array('label' => 'Adresse'))
+                ->add('pays', TextType::class, array('label' => 'Pays'))
+                ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
+                ->add('save', SubmitType::class, array('label' => 'Envoyer'));
+
+            $form = $formBuilder->getForm();
+
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+            {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($utilisateur);
+
+                $em->flush();
+
+                $this->addFlash('notice','Informations de profil enregistrées.');
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mes-informations.html.twig', array('utilisateur' => $utilisateur, 'form' => $form->createView()));
         }
         else
         {
