@@ -127,6 +127,12 @@ class DefaultController extends Controller
             {
                 $em = $this->getDoctrine()->getManager();
 
+                $encoder = $this->container->get('security.password_encoder');
+
+                $passwordEncoded = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
+
+                $utilisateur->setPassword($passwordEncoded);
+
                 $em->persist($utilisateur);
 
                 $em->flush();
