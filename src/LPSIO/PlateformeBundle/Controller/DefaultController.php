@@ -103,13 +103,38 @@ class DefaultController extends Controller
         }
     }
 
-    public function modifierMonMotDePasseAction()
+    public function modifierMonMotDePasseAction(Request $request)
     {
         if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             $utilisateur = $this->getUser();
 
-            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mot-de-passe.html.twig', array('utilisateur' => $utilisateur));
+            $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $utilisateur);
+
+            $formBuilder = $this->createFormBuilder($utilisateur)
+                ->add('password', RepeatedType::class, array(
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'Les mots de passe doivent correspondrent.',
+                    'options' => array('attr' => array('class' => 'password-field')),
+                    'required' => true,
+                    'first_options' => array('label' => 'Nouveau mot de passe'),
+                    'second_options' => array('label' => 'Répéter le mot de passe')))
+                ->add('save', SubmitType::class, array('label' => 'Modifier mon mot de passe'));
+
+            $form = $formBuilder->getForm();
+
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+            {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($utilisateur);
+
+                $em->flush();
+
+                $this->addFlash('notice','Nouveau mot de passe enregistré.');
+            }
+
+            return $this->render('LPSIOPlateformeBundle:Administration:modifier-mot-de-passe.html.twig', array('form' => $form->createView()));
         }
         else
         {
