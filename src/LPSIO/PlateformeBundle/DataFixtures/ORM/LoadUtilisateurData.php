@@ -23,7 +23,7 @@ class LoadUtilisateurData implements FixtureInterface
         $utilisateur->setVille("COUSOLRE");
         $utilisateur->setPays("FRANCE");
         $utilisateur->setDateInscription(new \DateTime());
-        $utilisateur->setPassword("130795");
+        $utilisateur->setPassword('$2y$12$XvKWvFFMZZPdgBPvCS66du9THAYDyPC9Bm2OIy3Qmt/F8.ejEfg3q');
         $utilisateur->setSalt('');
         $utilisateur->setRoles(array('ROLE_USER'));
 
@@ -35,7 +35,7 @@ class LoadUtilisateurData implements FixtureInterface
         $administrateur->setVille("n/r");
         $administrateur->setPays("FRANCE");
         $administrateur->setDateInscription(new \DateTime());
-        $administrateur->setPassword("1234");
+        $administrateur->setPassword('$2y$12$XvKWvFFMZZPdgBPvCS66du9THAYDyPC9Bm2OIy3Qmt/F8.ejEfg3q');
         $administrateur->setSalt('');
         $administrateur->setRoles(array('ROLE_SUPER_ADMIN'));
 
