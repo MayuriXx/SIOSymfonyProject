@@ -239,6 +239,7 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($contact);
+
             $em->flush();
 
             $message = \Swift_Message::newInstance()
@@ -284,7 +285,14 @@ class DefaultController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
+            $encoder = $this->container->get('security.password_encoder');
+
+            $passwordEncoded = $encoder->encodePassword($utilisateur, $utilisateur->getPassword());
+
+            $utilisateur->setPassword($passwordEncoded);
+
             $em->persist($utilisateur);
+
             $em->flush();
 
             $this->addFlash('notice','Inscription réussie !');
