@@ -4,6 +4,8 @@ namespace LPSIO\PlateformeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Offre
  *
@@ -83,6 +85,15 @@ class Offre
      * @ORM\Column(name="visible", type="boolean")
      */
     private $visible;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="document", type="boolean")
+	 * @Assert\NotBlank(message="S'il vous plait, envoyez la brochure PDF du produit.")
+	 * @Assert\File(mimeTypes={"application/pdf"}, maxSize = "5M")
+     */
+	 private $document;
 
 
     /**
@@ -309,5 +320,29 @@ class Offre
     public function getVisible()
     {
         return $this->visible;
+    }
+
+    /**
+     * Set document
+     *
+     * @param boolean $document
+     *
+     * @return Offre
+     */
+    public function setDocument($document)
+    {
+        $this->document = $document;
+
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return boolean
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
 }
