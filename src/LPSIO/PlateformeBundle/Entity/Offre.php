@@ -89,7 +89,7 @@ class Offre
 	/**
      * @var string
      *
-     * @ORM\Column(name="document", type="boolean")
+     * @ORM\Column(name="document", type="string", nullable=true)
 	 * @Assert\NotBlank(message="S'il vous plait, envoyez la brochure PDF du produit.")
 	 * @Assert\File(mimeTypes={"application/pdf"}, maxSize = "5M")
      */
