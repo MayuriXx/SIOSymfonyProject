@@ -7,6 +7,7 @@ use LPSIO\PlateformeBundle\Entity\Contact;
 use LPSIO\PlateformeBundle\Entity\Offre;
 use LPSIO\PlateformeBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -227,7 +228,7 @@ class DefaultController extends Controller
             ->add('prenom', TextType::class, array('label' => 'Prénom'))
             ->add('courriel', EmailType::class, array('label' => 'Courriel'))
             ->add('message', TextareaType::class, array('label' => 'Message', 'required' => false))
-            ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
+			->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
             ->add('save', SubmitType::class, array('label' => 'Envoyer'));
 
         $form = $formBuilder->getForm();
@@ -408,6 +409,7 @@ class DefaultController extends Controller
                 ->add('dateFin', DateType::class, array('label' => 'Date de fin'))
                 ->add('duree', IntegerType::class, array('label' => 'Durée'))
                 ->add('salaire', IntegerType::class, array('label' => 'Salaire'))
+				->add('document', FileType::class, array('label' => 'Fichier PDF de l\'offre'))
                 ->add('visible', CheckboxType::class, array('label' => 'Visible'))
                 ->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
                 ->add('save', SubmitType::class, array('label' => 'Envoyer'));
@@ -416,11 +418,20 @@ class DefaultController extends Controller
 
             if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
             {
+				$fichier = $offre->getDocument();
+				
+				$nomFichier = md5(uniqid()).'.'.$fichier->guessExtension(); 
+				
+				$fichier->move($this->getParameter('documents'), $nomFichier);
+				
+				$offre->setDocument($fichier);
+				
                 $offre->setDateCreation(new \DateTime('now'));
 
                 $em = $this->getDoctrine()->getManager();
 
                 $em->persist($offre);
+				
                 $em->flush();
 
                 $this->addFlash('notice','Ajout de l\'offre réussie');
