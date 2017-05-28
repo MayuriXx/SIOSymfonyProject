@@ -45,6 +45,13 @@ class Contact
     /**
      * @var string
      *
+     * @ORM\Column(name="sujet", type="string", length=255, nullable=false)
+     */
+    private $sujet;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="message", type="text", nullable=false)
      */
     private $message;
@@ -184,5 +191,29 @@ class Contact
     public function getDateContact()
     {
         return $this->dateContact;
+    }
+
+    /**
+     * Set sujet
+     *
+     * @param string $sujet
+     *
+     * @return Contact
+     */
+    public function setSujet($sujet)
+    {
+        $this->sujet = $sujet;
+
+        return $this;
+    }
+
+    /**
+     * Get sujet
+     *
+     * @return string
+     */
+    public function getSujet()
+    {
+        return $this->sujet;
     }
 }
