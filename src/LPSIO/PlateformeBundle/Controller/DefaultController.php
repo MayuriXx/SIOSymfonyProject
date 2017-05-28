@@ -227,6 +227,7 @@ class DefaultController extends Controller
             ->add('nom', TextType::class, array('label' => 'Nom'))
             ->add('prenom', TextType::class, array('label' => 'Prénom'))
             ->add('courriel', EmailType::class, array('label' => 'Courriel'))
+            ->add('sujet', TextType::class, array('label' => 'Sujet'))
             ->add('message', TextareaType::class, array('label' => 'Message', 'required' => false))
 			->add('reset', ResetType::class, array('label' => 'Réinitialisation'))
             ->add('save', SubmitType::class, array('label' => 'Envoyer'));
@@ -235,7 +236,7 @@ class DefaultController extends Controller
 
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
         {
-            $contact->setDateContact(new \DateTime('now'));
+            $contact->setDateContact(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
 
